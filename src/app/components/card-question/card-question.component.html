@@ -1,0 +1,35 @@
+<div class="question-parent-container">
+    <div #myToast class="toast toast-correct mb-3" role="alert" aria-live="assertive" aria-atomic="true" style="width: 700px;" data-bs-autohide="false" >
+        <div class="toast-header" [ngClass]="{'correct': this.isCorrect, 'incorrect': !this.isCorrect }">
+            <!-- <img src="..." class="rounded me-2" alt="..."> -->
+            <strong *ngIf="this.isCorrect" class="me-auto" style="color:#fff;">¡Respuesta correcta!</strong>
+            <strong *ngIf="!this.isCorrect" class="me-auto" style="color:#fff;">Respuesta incorrecta</strong>
+            <button *ngIf="this.currentQuestion < this.questions.length-1" type="button" class="btn btn btn-light btn-sm" data-bs-dismiss="toast" aria-label="Close" (click)="nextQuestion()">Siguiente</button>
+            <button *ngIf="this.currentQuestion == this.questions.length-1" type="button" class="btn btn btn-light btn-sm" data-bs-dismiss="toast" aria-label="Close" (click)="finish()">Finalizar</button>
+          </div>
+          <div class="toast-body" style="text-align: justify;">
+            {{this.feedback}}
+          </div>
+      </div>
+    <div class="shadow question-container rounded mb-3" *ngIf="!this.surveyFinished">
+        <div class="marco">
+            <div class="introduction mb-3">{{this.questions[this.currentQuestion].introduction}}</div>
+            <div class="question mb-3">
+                {{this.questions[this.currentQuestion].question}}
+            </div>
+            <div class="options-container">
+                <div class="options p-3" >
+                    <button [disabled]="this.responses.length == this.currentQuestion+1" class="btn option p-3 shadow-sm rounded card" *ngFor="let opt of this.questions[this.currentQuestion].options" (click)="this.selectAnswer(opt)" >
+                        <p>
+                            {{opt.option}}
+                        </p>
+                    </button>
+                </div>
+                <div class="svg-image">
+                        <img src="assets/svg/{{this.questions[this.currentQuestion].icon}}.svg" width="100%" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
